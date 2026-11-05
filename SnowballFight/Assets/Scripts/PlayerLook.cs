@@ -1,7 +1,8 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerLook : MonoBehaviour
+public class PlayerLook : NetworkBehaviour
 {
     [SerializeField] float minViewDistance = 25f;
     [SerializeField] float mouseSensitivity = 100f;
@@ -15,9 +16,13 @@ public class PlayerLook : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        if (!isLocalPlayer)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         float mouseX = mousePos.x * mouseSensitivity * Time.deltaTime;
         float mouseY = mousePos.y * mouseSensitivity * Time.deltaTime;
@@ -32,6 +37,9 @@ public class PlayerLook : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        mousePos = context.ReadValue<Vector2>();
+        if (isLocalPlayer && Application.isFocused)
+        {
+            mousePos = context.ReadValue<Vector2>();
+        }
     }
 }
