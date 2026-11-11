@@ -9,9 +9,9 @@ public class PlayerLook : NetworkBehaviour
 
     [SerializeField] Transform playerBody;
 
-    float xRotation = 0;
+    private float xRotation = 0;
 
-    Vector2 mousePos = Vector3.zero;
+    private Vector2 mousePos = Vector3.zero;
 
     private void Start()
     {
