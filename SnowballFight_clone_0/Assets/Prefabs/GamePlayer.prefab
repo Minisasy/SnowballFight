@@ -17,8 +17,9 @@ GameObject:
   - component: {fileID: 3371395647161422259}
   - component: {fileID: 613308572418339891}
   - component: {fileID: 523592661447107809}
+  - component: {fileID: -8609634668834052900}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: GamePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,6 +284,21 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &-8609634668834052900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566460904111132578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd17df2f8cb6ca41991cfd77b960e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkGamePlayer
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &6972430314767828096
 GameObject:
   m_ObjectHideFlags: 0

@@ -184,7 +184,9 @@ MonoBehaviour:
   timeInterpolationGui: 0
   minPlayers: 2
   menuScene: Lobby
+  gameScene: GameScene
   roomPlayerPrefab: {fileID: 1056500566785838923, guid: d09e80caf7b0dd64a8d46276a4ada194, type: 3}
+  gamePlayerPrefab: {fileID: -860456802010705234, guid: 854a2d7353656284c820e0e928f302c7, type: 3}
 --- !u!114 &318840219
 MonoBehaviour:
   m_ObjectHideFlags: 0
