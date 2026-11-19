@@ -182,7 +182,7 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  minPlayers: 2
+  minPlayers: 1
   menuScene: Lobby
   gameScene: GameScene
   roomPlayerPrefab: {fileID: 1056500566785838923, guid: d09e80caf7b0dd64a8d46276a4ada194, type: 3}

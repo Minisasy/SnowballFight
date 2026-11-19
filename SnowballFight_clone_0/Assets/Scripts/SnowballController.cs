@@ -1,20 +1,31 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SnowballController : MonoBehaviour
+public class SnowballController : NetworkBehaviour
 {
     [SerializeField] GameObject camera;
     [SerializeField] LayerMask interactLayer;
     [SerializeField] float interactRange = 2f;
-    [SerializeField] float maxSize = 0.4f;
     [SerializeField] GameObject snowball;
-    [SerializeField] float speed;
+
+    [Header("Size")]
+    [SerializeField] float maxSize = 0.4f;
+    [SerializeField] float medSize = 0.2f;
+    [SerializeField] float sizeSpeed;
+    private float newScale;
 
     private RaycastHit hit;
     private bool snowballMax = false;
     private bool lookingAtSnow = false;
     private bool held = false;
-    private float newScale;
+
+    [Header("Size")]
+    [SerializeField] float rotSpeed = 5f;
+    [SerializeField] float rotAmount = 90f;
+    private float time;
+    private bool rotateNegative = false;
+    private float newRotation;
 
     private void Start()
     {
@@ -31,8 +42,8 @@ public class SnowballController : MonoBehaviour
             lookingAtSnow = false;
         }
 
-
         MakeSnowball();
+        RotateSnowball();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -51,13 +62,34 @@ public class SnowballController : MonoBehaviour
     {
         if (lookingAtSnow && held)
         {
+            ActivateSnowball(true);
             snowball.transform.localScale = Vector3.zero;
-            newScale += speed * Time.deltaTime;
+            newScale += sizeSpeed * Time.deltaTime;
             if (newScale >= maxSize)
             {
                 newScale = maxSize;
+                snowballMax = true;
             }
             snowball.transform.localScale = new Vector3(newScale, newScale, newScale);
         }
+    }
+
+    private void RotateSnowball()
+    {
+        if (lookingAtSnow && held)
+        {
+            time += Time.deltaTime * rotSpeed;
+
+            float x = Mathf.Sin(time) * rotAmount;
+            float y = Mathf.Sin(time * 1.5f) * rotAmount;
+
+            snowball.transform.localRotation = Quaternion.Euler(x, y, 0);
+        }
+    }
+
+    [ClientRpc]
+    private void ActivateSnowball(bool state)
+    {
+        snowball.SetActive(state);
     }
 }
