@@ -81,7 +81,7 @@ public class SnowballController : NetworkBehaviour
             time += Time.deltaTime * rotSpeed;
 
             float x = Mathf.Sin(time) * rotAmount;
-            float y = Mathf.Sin(time * 1.5f) * rotAmount;
+            float y = time * rotAmount;
 
             snowball.transform.localRotation = Quaternion.Euler(x, y, 0);
         }
