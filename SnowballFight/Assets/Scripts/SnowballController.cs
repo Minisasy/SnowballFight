@@ -27,9 +27,13 @@ public class SnowballController : NetworkBehaviour
     private bool rotateNegative = false;
     private float newRotation;
 
+    private ObjectPool pool;
+    private GameObject spawnedSnowball;
+
     private void Start()
     {
         snowball.transform.localScale = Vector3.zero;
+        pool = FindAnyObjectByType<ObjectPool>();
     }
     void Update()
     {
@@ -51,6 +55,8 @@ public class SnowballController : NetworkBehaviour
         if (context.performed)
         {
             held = true;
+            //ThrowSnowball();
+            CmdFire();
         }
         if (context.canceled)
         {
@@ -87,9 +93,42 @@ public class SnowballController : NetworkBehaviour
         }
     }
 
+    //private void ThrowSnowball()
+    //{
+    //    if (lookingAtSnow == false && snowball.activeSelf == true)
+    //    {
+    //        if (pool == null)
+    //        {
+    //            pool = FindAnyObjectByType<ObjectPool>();
+    //        }
+    //        pool.SpawnSnowball(camera.transform, 1, out spawnedSnowball);
+    //        UpdateSnowballActiveState(true);
+    //        //ActivateSnowball(true, pool.GetLastSpawned());
+    //        spawnedSnowball.GetComponent<Rigidbody>().AddForce(camera.transform.forward, ForceMode.Force);
+    //    }
+    //}
+
     [ClientRpc]
     private void ActivateSnowball(bool state)
     {
         snowball.SetActive(state);
     }
+
+    [Command]
+    void CmdFire()
+    {
+
+        if (lookingAtSnow == false && snowball.activeSelf == true)
+        {
+            GameObject projectile = ObjectPool.singleton.Get(camera.transform.position, camera.transform.rotation);
+            NetworkServer.Spawn(projectile);
+            projectile.GetComponent<Rigidbody>().AddForce(camera.transform.forward * 10f, ForceMode.Impulse);
+        }
+    }
+
+    //[ClientRpc]
+    //private void UpdateSnowballActiveState(bool state)
+    //{
+    //    spawnedSnowball.SetActive(state);
+    //}
 }

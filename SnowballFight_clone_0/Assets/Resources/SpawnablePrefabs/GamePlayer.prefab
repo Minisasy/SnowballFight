@@ -223,6 +223,7 @@ MonoBehaviour:
   sizeSpeed: 0.1
   rotSpeed: 4
   rotAmount: 50
+  pool: {fileID: 0}
 --- !u!114 &83593519822121479
 MonoBehaviour:
   m_ObjectHideFlags: 0
